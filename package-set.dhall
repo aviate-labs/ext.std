@@ -2,6 +2,11 @@ let upstream = https://github.com/dfinity/vessel-package-set/releases/download/m
 let Package = { name : Text, version : Text, repo : Text, dependencies : List Text }
 
 let additions = [
+  { name = "principal"
+  , repo = "https://github.com/aviate-labs/principal.mo"
+  , version = "v0.2.0"
+  , dependencies = ["base", "sha", "encoding"]
+  },
   { name = "sha"
   , repo = "https://github.com/aviate-labs/sha.mo"
   , version = "v0.1.1"
@@ -11,12 +16,7 @@ let additions = [
   , repo = "https://github.com/aviate-labs/encoding.mo"
   , version = "v0.2.1"
   , dependencies = ["base"]
-  },
-  { name = "principal"
-  , repo = "https://github.com/aviate-labs/principal.mo"
-  , version = "v0.1.2"
-  , dependencies = ["base"]
-  },
+  }
 ] : List Package
 
 in  upstream # additions

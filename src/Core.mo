@@ -1,36 +1,36 @@
+import AccountIdentifier "mo:principal/AccountIdentifier";
 import Result "mo:base/Result";
-
-import AccountIdentifier "AccountIdentifier";
 
 module {
     // Balance refers to an amount of a particular token.
-    type Balance = Nat;
+    public type Balance = Nat;
 
-    type BalanceRequest = { 
+    public type BalanceRequest = {
         user : User; 
         token: TokenIdentifier;
     };
 
-    type BalanceResponse = Result.Result<Balance, CommonError>;
+    public type BalanceResponse = Result.Result<Balance, CommonError>;
 
-    type CommonError = {
+    public type CommonError = {
         #InvalidToken : TokenIdentifier;
         #Other        : Text;
     };
 
-    type Extension = Text;
+    public type Extension = Text;
 
-    type Memo = Blob;
+    // Represents a "payment" memo/data which can be attached to a transaction.
+    public type Memo = Blob;
 
     // A unique id for a particular token and reflects the canister where the 
     // token resides as well as the index within the tokens container.
     // x0A + "tid" + canisterId + a 32 bit index.
-    type TokenIdentifier  = Text;
+    public type TokenIdentifier  = Text;
     
     // Represents an individual token's index within a given canister.
-    type TokenIndex = Nat32;
+    public type TokenIndex = Nat32;
 
-    type TransferRequest = {
+    public type TransferRequest = {
         from       : User;
         to         : User;
         token      : TokenIdentifier;
@@ -40,7 +40,7 @@ module {
         subaccount : ?AccountIdentifier.SubAccount;
     };
 
-    type TransferResponse = Result.Result<Balance, {
+    public type TransferResponse = Result.Result<Balance, {
         #Unauthorized        : AccountIdentifier.AccountIdentifier;
         #InsufficientBalance;
         #Rejected;
@@ -49,14 +49,17 @@ module {
         #Other               : Text;
     }>;
 
-    type User = {
+    public type User = {
         #address   : AccountIdentifier.AccountIdentifier;
         #principal : Principal;
     };
 
-    type Interface = actor {
+    public type Interface = actor {
+        // Returns the balance of a requested User.
         balance    : query (request : BalanceRequest)   -> async BalanceResponse;
+        // Returns an array of extensions that the canister supports.
         extensions : query ()                           -> async [Extension];
+        // Transfers an given amount of tokens between two users, from and to, with an optional memo.
         transfer   : shared (request : TransferRequest) -> async TransferResponse;
     };
 };
