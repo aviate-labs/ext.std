@@ -13,7 +13,6 @@ import SHA256 "mo:sha/SHA256";
 import Text "mo:base/Text";
 
 import P "mo:base/Prelude";
-import Debug "mo:base/Debug";
 
 import util "mo:principal/util";
 
@@ -86,6 +85,22 @@ module {
                 Blob.toArray(Principal.toBlob(tokenId.canisterId)),
                 Binary.BigEndian.fromNat32(tokenId.index),
             ));
+        };
+
+        public func fromText(textTokenId : Text) : Result.Result<TokenIdentifier, Text> {
+            var bs = switch (Hex.decode(textTokenId)) {
+                case (#err(e)) { return #err(e); };
+                case (#ok(bs)) { bs; };
+            };
+
+            let bsCanister = util.take<Nat8>(bs, bs.size() - 4);
+            bs := util.drop<Nat8>(bs, bs.size() - 4);
+            let canisterId = Principal.fromBlob(Blob.fromArray(bsCanister));
+
+            #ok({
+                canisterId;
+                index = Binary.BigEndian.toNat32(bs);
+            })
         };
 
         public func toText(tokenId : TokenIdentifier) : Text {

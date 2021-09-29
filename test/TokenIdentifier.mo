@@ -1,7 +1,5 @@
 import Principal "mo:base/Principal";
 
-import Debug "mo:base/Debug";
-
 import Core "../src/Core";
 
 let p = Principal.fromText("aaaaa-aa");
@@ -20,3 +18,5 @@ assert(Core.TokenIdentifier.toText({
     canisterId = p;
     index      = 1 : Core.TokenIndex;
 }) == "00000001");
+
+assert(Core.TokenIdentifier.fromText("00000000") == #ok(tokenId));
