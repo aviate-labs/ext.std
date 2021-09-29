@@ -15,8 +15,18 @@ module {
         };
     };
 
+    public type MetadataResponse = Result.Result<
+        Metadata,
+        Core.CommonError
+    >;
+
+    public type SupplyResponse = Result.Result<
+        Core.Balance,
+        Core.CommonError
+    >;
+
     public type Inferface = actor {
-        metadata   : shared query (token : Core.TokenIdentifier) -> async Result.Result<Metadata, Core.CommonError>;
-        supply     : shared query (token : Core.TokenIdentifier) -> async Result.Result<Core.Balance, Core.CommonError>;
+        metadata   : query (token : Core.TokenIdentifier) -> async MetadataResponse;
+        supply     : query (token : Core.TokenIdentifier) -> async SupplyResponse;
     };
 };
