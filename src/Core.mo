@@ -1,4 +1,5 @@
 import AccountIdentifier "mo:principal/AccountIdentifier";
+import Hash "mo:base/Hash";
 import Result "mo:base/Result";
 
 module {
@@ -29,6 +30,8 @@ module {
     
     // Represents an individual token's index within a given canister.
     public type TokenIndex = Nat32;
+
+    public func tokenIndexHash(t : TokenIndex) : Hash.Hash { t; };
 
     public type TransferRequest = {
         from       : User;
