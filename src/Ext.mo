@@ -46,6 +46,7 @@ module {
         };
     };
 
+    // Balance refers to an amount of a particular token.
     public type Balance = Nat;
 
     public type CommonError = {
@@ -55,17 +56,22 @@ module {
 
     public type Extension = Text;
 
+    // Represents a 'payment' memo which can be attached to a transaction.
     public type Memo = Blob;
 
+    // A unique id for a particular token and reflects the canister where the 
+    // token resides as well as the index within the tokens container.
     public type TokenIdentifier = Text;
 
     public module TokenIdentifier = {
         private let prefix : [Nat8] = [10, 116, 105, 100]; // \x0A "tid"
 
-        public func encode(principal : Principal, tokenIndex : TokenIndex) : TokenIdentifier {
+        // Encodes the given canister id and token index into a token identifier.
+        // \x0A + "tid" + canisterId + token index
+        public func encode(canisterId : Principal, tokenIndex : TokenIndex) : TokenIdentifier {
             let rawTokenId = Array.flatten<Nat8>([
                 prefix,
-                Blob.toArray(Principal.toBlob(principal)),
+                Blob.toArray(Principal.toBlob(canisterId)),
                 Binary.BigEndian.fromNat32(tokenIndex),
             ]);
             Text.fromIter(Iter.fromArray(
@@ -78,6 +84,7 @@ module {
             ));
         };
 
+        // Decodes the given token identifier into the underlying canister id and token index.
         public func decode(tokenId : TokenIdentifier) : Result.Result<(Principal, TokenIndex), Text> {
             var err : ?Text = null;
             var bs = Array.map<Char, Nat8>(
@@ -107,10 +114,12 @@ module {
         };
     };
 
+    // Represents an individual token's index within a given canister.
     public type TokenIndex = Nat32;
 
     public module TokenIndex = {
         public func equal(a : TokenIndex, b : TokenIndex) : Bool { a == b; };
+
         public func hash(a : TokenIndex) : Hash.Hash { a; };
     };
 
