@@ -128,6 +128,27 @@ module {
         #principal : Principal;
     };
 
+    public module User = {
+        public func equal(a : User, b : User) : Bool {
+            let aAddress = toAccountIdentifier(a);
+            let bAddress = toAccountIdentifier(b);
+            AccountIdentifier.equal(aAddress, bAddress);
+        };
+
+        public func hash(u : User) : Hash.Hash {
+            AccountIdentifier.hash(toAccountIdentifier(u));
+        };
+
+        public func toAccountIdentifier(u : User) : AccountIdentifier {
+            switch (u) {
+                case (#address(address)) { address; };
+                case (#principal(principal)) {
+                    AccountIdentifier.fromPrincipal(principal, null);
+                };
+            };
+        };
+    };
+
     public module Core = {
         public type BalanceRequest = { 
             user  : User; 

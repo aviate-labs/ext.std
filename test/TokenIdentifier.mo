@@ -1,5 +1,4 @@
 import Principal "mo:base/Principal";
-import Debug "mo:base/Debug";
 
 import Ext "../src/Ext";
 
