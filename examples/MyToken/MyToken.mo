@@ -1,5 +1,5 @@
-import Ext "mo:std/EXT/Ext";
-import Interface "mo:std/EXT/Interface";
+import Ext "mo:std/Ext";
+import Interface "mo:std/Interface";
 
 shared({caller = owner}) actor class Token() : async Interface.FungibleToken = {
     // TODO: implement endpoints.
