@@ -6,12 +6,12 @@ module {
     public type FungibleToken = actor {
         // @ext:core
         balance    : query (request : Ext.Core.BalanceRequest)   -> async Ext.Core.BalanceResponse;
-        extensions : query ()                                    -> async [Ext.Core.Extension];
+        extensions : query ()                                    -> async [Ext.Extension];
         transfer   : shared (request : Ext.Core.TransferRequest) -> async Ext.Core.TransferResponse;
 
         // @ext:common
-        metadata : query (token : Ext.Core.TokenIdentifier) -> async Ext.Common.MetadataResponse;
-        supply   : query (token : Ext.Core.TokenIdentifier) -> async Ext.Common.SupplyResponse;
+        metadata : query (token : Ext.TokenIdentifier) -> async Ext.Common.MetadataResponse;
+        supply   : query (token : Ext.TokenIdentifier) -> async Ext.Common.SupplyResponse;
     };
 
     // A basic nft interface, used for f.e. ERC721 tokens.
@@ -19,15 +19,15 @@ module {
     public type NonFungibleToken = actor {
         // @ext:core
         balance    : query (request : Ext.Core.BalanceRequest)   -> async Ext.Core.BalanceResponse;
-        extensions : query ()                                    -> async [Ext.Core.Extension];
+        extensions : query ()                                    -> async [Ext.Extension];
         transfer   : shared (request : Ext.Core.TransferRequest) -> async Ext.Core.TransferResponse;
 
         // @ext:common
-        metadata : query (token : Ext.Core.TokenIdentifier) -> async Ext.Common.MetadataResponse;
-        supply   : query (token : Ext.Core.TokenIdentifier) -> async Ext.Common.SupplyResponse;
+        metadata : query (token : Ext.TokenIdentifier) -> async Ext.Common.MetadataResponse;
+        supply   : query (token : Ext.TokenIdentifier) -> async Ext.Common.SupplyResponse;
 
         // @ext:nonfungible
-        bearer  : query (token : Ext.Core.TokenIdentifier)       -> async Ext.NonFungible.BearerResponse;
+        bearer  : query (token : Ext.TokenIdentifier)            -> async Ext.NonFungible.BearerResponse;
         mintNFT : shared (request : Ext.NonFungible.MintRequest) -> async ();
 
         // @ext:allowance

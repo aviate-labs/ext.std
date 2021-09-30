@@ -34,6 +34,21 @@ let additions = [
   { name = "std"
   , repo = "https://github.com/aviate-labs/ext.std"
   , version = "main"
+  , dependencies = ["base", "principal"]
+  },
+  { name = "principal"
+  , repo = "https://github.com/aviate-labs/principal.mo"
+  , version = "v0.2.1"
+  , dependencies = ["base", "sha", "encoding"]
+  },
+  { name = "sha"
+  , repo = "https://github.com/aviate-labs/sha.mo"
+  , version = "v0.1.1"
+  , dependencies = ["base", "encoding"]
+  },
+  { name = "encoding"
+  , repo = "https://github.com/aviate-labs/encoding.mo"
+  , version = "v0.2.2"
   , dependencies = ["base"]
   }
 ] : List Package

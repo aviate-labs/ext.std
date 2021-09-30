@@ -9,7 +9,7 @@ shared({caller = owner}) actor class Token() : async Interface.FungibleToken = {
         #err(#Other("not implemented"));
     };
 
-    public query func extensions() : async [Ext.Core.Extension] {
+    public query func extensions() : async [Ext.Extension] {
         ["@ext:common"];
     };
 
@@ -18,11 +18,11 @@ shared({caller = owner}) actor class Token() : async Interface.FungibleToken = {
     };
 
     // @ext:common
-    public query func metadata(token : Ext.Core.TokenIdentifier) : async Ext.Common.MetadataResponse {
+    public query func metadata(token : Ext.TokenIdentifier) : async Ext.Common.MetadataResponse {
         #err(#Other("not implemented"));
     };
 
-    public query func supply(token : Ext.Core.TokenIdentifier) : async Ext.Common.SupplyResponse {
+    public query func supply(token : Ext.TokenIdentifier) : async Ext.Common.SupplyResponse {
         #err(#Other("not implemented"));
     };
 };

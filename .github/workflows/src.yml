@@ -13,3 +13,4 @@ jobs:
           install-moc: true
           vessel-version: 0.6.2
       - run: for i in src/*.mo ; do moc $(vessel sources) --check $i ; done
+      - run: for i in src/EXT/*.mo ; do moc $(vessel sources) --check $i ; done
