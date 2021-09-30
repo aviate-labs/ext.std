@@ -1,5 +1,11 @@
 # Toniq Labs' Extendable Token Standard
 
+| **Table of Contents**
+
+- [Usage](#usage)
+  - [Vessel](#vessel)
+  - [Interfaces](#interfaces)
+
 ## Usage
 
 ### Vessel
@@ -42,6 +48,8 @@ $(dfx cache show)/moc $(vessel sources) -r MyToken.mo
 ```
 
 ### Interfaces
+
+You can use the predefined interfaces to check whether you have implemented al the required methods.
 
 ```motoko
 import Ext "mo:std/EXT/Ext";
