@@ -55,7 +55,7 @@ You can use the predefined interfaces to check whether you have implemented al t
 import Ext "mo:std/EXT/Ext";
 import Interface "mo:std/EXT/Interface";
 
-shared({caller = owner}) actor class Token() : async Interface.Token = {
+shared({caller = owner}) actor class Token() : async Interface.FungibleToken = {
     // TODO: implement endpoints.
 };
 ```

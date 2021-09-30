@@ -3,7 +3,7 @@ import Ext "Ext";
 module {
     // A basic token interface, used for f.e. ERC20 tokens.
     // Contains the minimal interface for a fungible token.
-    public type FungibleToken = {
+    public type FungibleToken = actor {
         // @ext:core
         balance    : query (request : Ext.Core.BalanceRequest)   -> async Ext.Core.BalanceResponse;
         extensions : query ()                                    -> async [Ext.Core.Extension];
@@ -16,7 +16,7 @@ module {
 
     // A basic nft interface, used for f.e. ERC721 tokens.
     // Contains the minimal interface for a non fungible token.
-    public type NonFungibleToken = {
+    public type NonFungibleToken = actor {
         // @ext:core
         balance    : query (request : Ext.Core.BalanceRequest)   -> async Ext.Core.BalanceResponse;
         extensions : query ()                                    -> async [Ext.Core.Extension];
