@@ -192,7 +192,7 @@ module {
         };
 
         public type MintResponse = Result.Result<
-           TokenIdentifier,
+           TokenIndex,
            CommonError
         >;
     };
