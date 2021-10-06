@@ -215,6 +215,11 @@ module {
             to       : User;
             metadata : ?Blob;
         };
+
+        public type MintResponse = Result.Result<
+           TokenIdentifier,
+           CommonError
+        >;
     };
 
     public module Allowance = {
