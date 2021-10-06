@@ -1,7 +1,10 @@
 import Array "mo:base/Array";
+import Array_ "mo:array/Array";
+import Base32 "mo:encoding/Base32";
 import Binary "mo:encoding/Binary";
 import Blob "mo:base/Blob";
 import Char "mo:base/Char";
+import CRC32 "mo:hash/CRC32";
 import Hash "mo:base/Hash";
 import Hex "mo:encoding/Hex";
 import Iter "mo:base/Iter";
@@ -12,7 +15,7 @@ import RawAccountId "mo:principal/AccountIdentifier";
 import Result "mo:base/Result";
 import Text "mo:base/Text";
 
-import util "mo:principal/util";
+import Debug "mo:base/Debug";
 
 // This modules follows Toniq Labs' EXT Standard.
 // Lastest commit: 1f7ef3e.
@@ -66,50 +69,14 @@ module {
     public module TokenIdentifier = {
         private let prefix : [Nat8] = [10, 116, 105, 100]; // \x0A "tid"
 
-        // Encodes the given canister id and token index into a token identifier.
-        // \x0A + "tid" + canisterId + token index
-        public func encode(canisterId : Principal, tokenIndex : TokenIndex) : TokenIdentifier {
-            let rawTokenId = Array.flatten<Nat8>([
-                prefix,
-                Blob.toArray(Principal.toBlob(canisterId)),
-                Binary.BigEndian.fromNat32(tokenIndex),
-            ]);
-            Text.fromIter(Iter.fromArray(
-                Array.map<Nat8, Char>(
-                    rawTokenId,
-                    func (n : Nat8) : Char {
-                        Char.fromNat32(Nat32.fromNat(Nat8.toNat(n)));
-                    },
-                ),
-            ));
-        };
-
-        // Decodes the given token identifier into the underlying canister id and token index.
         public func decode(tokenId : TokenIdentifier) : Result.Result<(Principal, TokenIndex), Text> {
-            var err : ?Text = null;
-            var bs = Array.map<Char, Nat8>(
-                Iter.toArray(tokenId.chars()),
-                func (c : Char) : Nat8 {
-                    let n = Char.toNat32(c);
-                    if (127 < n) {
-                        err := ?"invalid non-ascii character";
-                        return 0;
-                    };
-                    Nat8.fromNat(Nat32.toNat(n));
-                },
-            );
-            switch (err) {
-                case (? e)  { return #err(e); };
-                case (null) {
-                    if (bs.size() < 8) return #err("too short");
-                };
-            };
-            bs := util.drop<Nat8>(bs, 4);
-            let canisterId = util.take<Nat8>(bs, bs.size() - 4);
-            bs := util.drop<Nat8>(bs, bs.size() - 4);
+            let bs = Blob.toArray(Principal.toBlob(Principal.fromText(tokenId)));
+            let (rawPrefix, rawToken) = Array_.split(bs, 4);
+            if (rawPrefix != prefix) return #err("invalid prefix");
+            let (rawCanister, rawIndex) = Array_.split(rawToken, rawToken.size() - 4 : Nat);
             #ok(
-                Principal.fromBlob(Blob.fromArray(canisterId)),
-                Binary.BigEndian.toNat32(bs),
+                Principal.fromBlob(Blob.fromArray(rawCanister)),
+                Binary.BigEndian.toNat32(rawIndex),
             );
         };
     };
