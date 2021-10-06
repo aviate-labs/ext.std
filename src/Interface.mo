@@ -47,7 +47,7 @@ module {
         // Returns the account that is linked to the given token.
         bearer  : query (token : Ext.TokenIdentifier)            -> async Ext.NonFungible.BearerResponse;
         // Mints a new NFT and assignes its owner to the given User.
-        mintNFT : shared (request : Ext.NonFungible.MintRequest) -> async ();
+        mintNFT : shared (request : Ext.NonFungible.MintRequest) -> async Ext.NonFungible.MintResponse;
 
         // [@ext:allowance]
 
