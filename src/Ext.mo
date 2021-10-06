@@ -15,8 +15,6 @@ import RawAccountId "mo:principal/AccountIdentifier";
 import Result "mo:base/Result";
 import Text "mo:base/Text";
 
-import Debug "mo:base/Debug";
-
 // This modules follows Toniq Labs' EXT Standard.
 // Lastest commit: 1f7ef3e.
 module {
