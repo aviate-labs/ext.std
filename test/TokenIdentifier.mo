@@ -23,12 +23,9 @@ for (i in tokenIds.keys()) {
     };
 };
 
-
-
 let c = Principal.fromText("rkp4c-7iaaa-aaaaa-aaaca-cai");
 let e = Ext.TokenIdentifier.encode(c, 0);
 assert(Ext.TokenIdentifier.decode(e) == #ok(c, 0));
-
 
 let xc = Principal.fromText("rkp4c-7iaaa-aaaaa-aaaca-cai");
 let xe = Ext.TokenIdentifier.encode(xc, 1234);
