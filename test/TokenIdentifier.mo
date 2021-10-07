@@ -18,7 +18,6 @@ for (i in tokenIds.keys()) {
         case (#err(_)) { assert(false); };
         case (#ok(_, index)) {
             assert(i == Nat32.toNat(index));
-            
         };
     };
 };
