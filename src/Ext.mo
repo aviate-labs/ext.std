@@ -66,6 +66,16 @@ module {
 
     public module TokenIdentifier = {
         private let prefix : [Nat8] = [10, 116, 105, 100]; // \x0A "tid"
+     
+        public func encode(canisterId : Principal, tokenIndex : TokenIndex) : Text {
+            let rawTokenId = Array.flatten<Nat8>([
+                prefix,
+                Blob.toArray(Principal.toBlob(canisterId)),
+                Binary.BigEndian.fromNat32(tokenIndex),
+            ]);
+            
+            Principal.toText(Principal.fromBlob(Blob.fromArray(rawTokenId)));
+        };
 
         public func decode(tokenId : TokenIdentifier) : Result.Result<(Principal, TokenIndex), Text> {
             let bs = Blob.toArray(Principal.toBlob(Principal.fromText(tokenId)));
@@ -180,6 +190,11 @@ module {
             to       : User;
             metadata : ?Blob;
         };
+
+        public type MintResponse = Result.Result<
+           TokenIndex,
+           CommonError
+        >;
     };
 
     public module Allowance = {
