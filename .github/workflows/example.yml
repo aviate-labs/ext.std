@@ -14,5 +14,10 @@ jobs:
           install-moc: true
           vessel-version: 0.6.2
       - run: |
-          cd examples/MyToken
-          moc $(vessel sources) --check MyToken.mo
+          pushd examples/MyToken
+          moc $(vessel sources) --check src/MyToken.mo
+          popd
+      - run: |
+          pushd examples/MyNFT
+          moc $(vessel sources) --check src/MyNFT.mo
+          popd
