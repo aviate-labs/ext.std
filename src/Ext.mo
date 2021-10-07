@@ -73,7 +73,6 @@ module {
                 Blob.toArray(Principal.toBlob(canisterId)),
                 Binary.BigEndian.fromNat32(tokenIndex),
             ]);
-            
             Principal.toText(Principal.fromBlob(Blob.fromArray(rawTokenId)));
         };
 
@@ -192,8 +191,8 @@ module {
         };
 
         public type MintResponse = Result.Result<
-           TokenIndex,
-           CommonError
+            TokenIndex,
+            CommonError
         >;
     };
 

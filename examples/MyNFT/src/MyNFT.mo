@@ -31,8 +31,8 @@ shared({caller = owner}) actor class NFT() : async Interface.NonFungibleToken = 
         #err(#Other("not implemented"));
     };
 
-    public shared func mintNFT(request : Ext.NonFungible.MintRequest) : async () {
-        // TODO
+    public shared func mintNFT(request : Ext.NonFungible.MintRequest) : async Ext.NonFungible.MintResponse {
+        #err(#Other("not implemented")); // TODO
     };
 
     // @ext:allowance
