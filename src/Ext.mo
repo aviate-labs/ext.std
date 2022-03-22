@@ -121,6 +121,13 @@ module {
                 };
             };
         };
+
+        public func toPrincipal(u : User) : ?Principal {
+            switch (u) {
+                case (#address(a)) null;
+                case (#principal(p)) ?p;
+            }
+        };
     };
 
     public module Core = {
