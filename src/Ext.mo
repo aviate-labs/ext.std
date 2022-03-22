@@ -222,4 +222,13 @@ module {
             token      : TokenIdentifier;
         };
     };
+
+    public type NotifyService = actor {
+        tokenTransferNotification : shared (
+            token   : TokenIdentifier,
+            from    : User,
+            amount  : Balance,
+            memo    : Memo,
+        ) -> async ?Balance;
+    };
 };
